@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}B2BPrint — Корпоративные подарки{% endblock %}</title>
     {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'b2bprint/images/favicon/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '/b2bprint/images/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '/b2bprint/images/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '/b2bprint/images/favicon/favicon-16x16.png' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -37,24 +42,30 @@
         <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center gap-1.5 text-gray-500 text-xs">
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <span>Пн–Пт: 9:00–18:00</span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="tel:+998993041070" class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
+                <a href="tel:+998946705400"
+                   class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                     </svg>
-                    +998 99 304-10-70
+                    +998 94 670 54 00
                 </a>
-                <a href="tel:+998932051070" class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
+                <a href="mailto:info@b2bprint.uz"
+                   class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
-                    +998 93 205-10-70
+                    info@b2bprint.uz
                 </a>
-                <a href="https://t.me/abstrakt_manager" target="_blank" class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
+                <a href="https://t.me/ulugbeks07" target="_blank"
+                   class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
@@ -68,38 +79,48 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-6">
 
         <!-- LOGO -->
-        <a href="{% url 'pages:home' %}" class="text-xl font-black text-[#1a1a2e] tracking-tight shrink-0 flex items-center">
+        <a href="{% url 'pages:home' %}" class="text-xl font-black text-[#1a1a2e] tracking-tight shrink-0">
             B2B<span class="text-[#e63946]">Print</span>
         </a>
 
-        <!-- SEARCH -->
-        <form action="{% url 'catalog:list' %}" method="get" class="flex flex-1 max-w-2xl">
-            <input
-                type="text"
-                name="q"
-                placeholder="Поиск товаров с логотипом..."
-                class="flex-1 px-4 py-2.5 text-sm border-2 border-gray-200 border-r-0 rounded-l-xl outline-none focus:border-[#1a1a2e] transition-colors bg-gray-50 focus:bg-white"
-            >
-            <button type="submit" class="px-5 py-2.5 bg-[#1a1a2e] text-white rounded-r-xl hover:bg-[#2a2a4a] transition-colors flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        <!-- SEARCH WITH AUTOCOMPLETE -->
+        <div class="flex-1 max-w-2xl relative" id="searchWrapper">
+            <div class="relative flex items-center">
+                <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
-            </button>
-        </form>
+                <input
+                        id="searchInput"
+                        type="text"
+                        placeholder="Поиск товаров — начните вводить название..."
+                        class="w-full pl-10 pr-4 py-2.5 text-sm border-2 border-gray-200 rounded-xl outline-none focus:border-[#1a1a2e] transition-colors bg-gray-50 focus:bg-white"
+                        autocomplete="off"
+                        spellcheck="false"
+                >
+            </div>
+            <!-- AUTOCOMPLETE DROPDOWN -->
+            <div id="searchDropdown"
+                 class="hidden absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-2xl mt-1.5 z-50 overflow-hidden">
+            </div>
+        </div>
 
         <!-- ACTIONS -->
         <div class="flex items-center gap-3 shrink-0 ml-auto">
-            <a href="tel:+998993041070"
+            <a href="tel:+998946705400"
                class="hidden lg:flex items-center gap-2 px-4 py-2.5 border-2 border-[#1a1a2e] text-[#1a1a2e] rounded-xl text-sm font-semibold hover:bg-[#1a1a2e] hover:text-white transition-all">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                 </svg>
                 Позвонить
             </a>
             <a href="{% url 'orders:cart' %}"
                class="flex items-center gap-2 px-4 py-2.5 bg-[#e63946] text-white rounded-xl text-sm font-semibold hover:bg-[#c1121f] transition-colors">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
                 Корзина
                 <span class="bg-white text-[#e63946] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center leading-none">
@@ -116,7 +137,8 @@
                class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2
                {% if request.resolver_match.url_name == 'home' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
                 Главная
             </a>
@@ -124,7 +146,8 @@
                class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2
                {% if request.resolver_match.namespace == 'catalog' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                 </svg>
                 Каталог
             </a>
@@ -132,7 +155,8 @@
                class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2
                {% if request.resolver_match.url_name == 'about' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 О нас
             </a>
@@ -140,7 +164,8 @@
                class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2
                {% if request.resolver_match.url_name == 'contacts' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
                 Контакты
             </a>
@@ -179,17 +204,32 @@
                     Корпоративные подарки и промо-продукция с нанесением логотипа в Ташкенте.
                 </p>
                 <div class="space-y-2.5">
-                    <a href="tel:+998993041070" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                    <a href="tel:+998946705400"
+                       class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                         </svg>
-                        +998 99 304-10-70
+                        +998 94 670 54 00
                     </a>
-                    <a href="tel:+998932051070" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                    <a href="mailto:info@b2bprint.uz"
+                       class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
-                        +998 93 205-10-70
+                        info@b2bprint.uz
+                    </a>
+                    <a href="mailto:sales@b2bprint.uz"
+                       class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        sales@b2bprint.uz
                     </a>
                 </div>
             </div>
@@ -208,32 +248,48 @@
             <!-- COMPANY -->
             <div>
                 <h4 class="text-white font-semibold text-sm mb-5">Компания</h4>
-                <a href="{% url 'pages:about' %}" class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">О нас</a>
-                <a href="{% url 'pages:contacts' %}" class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">Контакты</a>
-                <a href="{% url 'catalog:list' %}" class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">Весь каталог</a>
+                <a href="{% url 'pages:about' %}"
+                   class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">О нас</a>
+                <a href="{% url 'pages:contacts' %}"
+                   class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">Контакты</a>
+                <a href="{% url 'catalog:list' %}"
+                   class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">Весь каталог</a>
             </div>
 
             <!-- CONTACTS -->
             <div>
                 <h4 class="text-white font-semibold text-sm mb-5">Связаться</h4>
-                <a href="https://t.me/abstrakt_manager" target="_blank"
+                <a href="https://t.me/ulugbeks07" target="_blank"
                    class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 mb-3 transition-colors">
                     <svg class="w-4 h-4 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
                     Telegram
                 </a>
-                <a href="tel:+998993041070"
+                <a href="tel:+998946705400"
                    class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 mb-3 transition-colors">
-                    <svg class="w-4 h-4 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                    <svg class="w-4 h-4 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                     </svg>
-                    +998 99 304-10-70
+                    +998 94 670 54 00
+                </a>
+                <a href="mailto:info@b2bprint.uz"
+                   class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 mb-3 transition-colors">
+                    <svg class="w-4 h-4 text-[#e63946] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    info@b2bprint.uz
                 </a>
                 <a href="{% url 'pages:contacts' %}"
                    class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 transition-colors">
-                    <svg class="w-4 h-4 text-[#e63946] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    <svg class="w-4 h-4 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                     </svg>
                     Написать нам
                 </a>
@@ -244,7 +300,8 @@
             <span class="text-xs text-gray-600">© 2025 B2BPrint — Все права защищены</span>
             <div class="flex items-center gap-1.5 text-xs text-gray-700">
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
                 Ташкент, Узбекистан
@@ -254,5 +311,157 @@
 </footer>
 
 {% block extra_js %}{% endblock %}
+
+<!-- GLOBAL SCRIPTS -->
+<script>
+    /* ── Telegram order ── */
+    window.orderViaTelegram = function (name, path) {
+        var productUrl = window.location.origin + path;
+        var text = 'Здравствуйте! Хочу заказать:\n\nТовар: ' + name + '\nСсылка: ' + productUrl;
+        window.open('https://t.me/ulugbeks07?text=' + encodeURIComponent(text), '_blank');
+    };
+
+    /* ── Search autocomplete ── */
+    (function () {
+        var input = document.getElementById('searchInput');
+        var dropdown = document.getElementById('searchDropdown');
+        if (!input || !dropdown) return;
+
+        var results = [];   /* текущие результаты */
+        var focused = -1;   /* индекс выделенного элемента */
+        var timer;
+
+        var noImg = '<div class="w-12 h-12 bg-slate-100 rounded-xl shrink-0 flex items-center justify-center">'
+            + '<svg class="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">'
+            + '<path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>'
+            + '</svg></div>';
+
+        function fmtPrice(n) {
+            return Math.floor(parseFloat(n)).toLocaleString('ru-RU');
+        }
+
+        function escape(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function highlight(text, q) {
+            /* подсвечиваем совпадающую часть */
+            var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            return escape(text).replace(re, '<mark class="bg-yellow-100 text-yellow-800 rounded px-0.5">$1</mark>');
+        }
+
+        function render(data, q) {
+            results = data;
+            focused = -1;
+            if (!data.length) {
+                dropdown.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-400">Ничего не найдено по запросу <strong class="text-gray-600">"' + escape(q) + '"</strong></div>';
+                dropdown.classList.remove('hidden');
+                return;
+            }
+            var html = '<div class="py-1">';
+            data.forEach(function (p, i) {
+                html += '<a href="' + p.url + '" data-idx="' + i + '" '
+                    + 'class="search-item flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors border-b border-gray-100 last:border-0 group" '
+                    + 'style="text-decoration:none;">';
+                html += p.image
+                    ? '<img src="' + p.image + '" class="w-12 h-12 object-cover rounded-xl shrink-0">'
+                    : noImg;
+                html += '<div class="flex-1 min-w-0">';
+                html += '<p class="text-sm font-semibold text-gray-900 truncate">' + highlight(p.name, q) + '</p>';
+                html += '<p class="text-xs text-gray-400 mt-0.5">' + escape(p.category) + '</p>';
+                html += '</div>';
+                if (p.price) {
+                    html += '<span class="text-sm font-bold text-[#e63946] shrink-0 ml-2">' + fmtPrice(p.price) + ' UZS</span>';
+                }
+                html += '</a>';
+            });
+            /* кнопка "Смотреть все результаты" */
+            html += '<a href="/catalog/?q=' + encodeURIComponent(q) + '" '
+                + 'class="flex items-center justify-center gap-2 px-4 py-3 text-xs font-semibold text-[#e63946] hover:bg-red-50 transition-colors border-t border-gray-100" '
+                + 'style="text-decoration:none;">'
+                + '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>'
+                + 'Смотреть все результаты для «' + escape(q) + '»'
+                + '</a>';
+            html += '</div>';
+            dropdown.innerHTML = html;
+            dropdown.classList.remove('hidden');
+        }
+
+        function setFocus(idx) {
+            var items = dropdown.querySelectorAll('.search-item');
+            items.forEach(function (el, i) {
+                if (i === idx) {
+                    el.classList.add('bg-slate-50');
+                    el.scrollIntoView({block: 'nearest'});
+                } else {
+                    el.classList.remove('bg-slate-50');
+                }
+            });
+            focused = idx;
+        }
+
+        function hide() {
+            dropdown.classList.add('hidden');
+            focused = -1;
+        }
+
+        /* ── ввод текста ── */
+        input.addEventListener('input', function () {
+            clearTimeout(timer);
+            var q = this.value.trim();
+            if (q.length < 2) {
+                hide();
+                return;
+            }
+            timer = setTimeout(function () {
+                fetch('/catalog/search/?q=' + encodeURIComponent(q))
+                    .then(function (r) {
+                        return r.json();
+                    })
+                    .then(function (d) {
+                        render(d.results, q);
+                    })
+                    .catch(function () {
+                        hide();
+                    });
+            }, 250);
+        });
+
+        /* ── клавиши ── */
+        input.addEventListener('keydown', function (e) {
+            var items = dropdown.querySelectorAll('.search-item');
+            if (e.key === 'Escape') {
+                hide();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setFocus(Math.min(focused + 1, items.length - 1));
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setFocus(Math.max(focused - 1, 0));
+            } else if (e.key === 'Enter') {
+                e.preventDefault();           /* НЕ отправляем форму */
+                if (focused >= 0 && items[focused]) {
+                    items[focused].click();   /* переходим на выделенный товар */
+                } else if (results.length) {
+                    window.location.href = items[0].href;   /* первый результат */
+                }
+            }
+        });
+
+        /* ── клик вне поиска ── */
+        document.addEventListener('click', function (e) {
+            if (!document.getElementById('searchWrapper').contains(e.target)) {
+                hide();
+            }
+        });
+
+        /* ── фокус на поле ── повторно показать dropdown ── */
+        input.addEventListener('focus', function () {
+            if (this.value.trim().length >= 2 && results.length) {
+                dropdown.classList.remove('hidden');
+            }
+        });
+    })();
+</script>
 </body>
 </html>
