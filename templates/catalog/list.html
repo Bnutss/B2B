@@ -14,10 +14,10 @@
         <span class="text-gray-600 font-medium">Каталог</span>
     </nav>
 
-    <div class="grid grid-cols-[260px_1fr] gap-7">
+    <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
 
         <!-- SIDEBAR -->
-        <aside class="sticky top-24 self-start space-y-4">
+        <aside class="lg:sticky lg:top-24 self-start space-y-4">
             <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
                 <div class="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
                     <svg class="w-4 h-4 text-[#e63946]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-5">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {% for product in products %}
                     <div class="bg-white rounded-xl overflow-hidden border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 relative group">
 
@@ -147,7 +147,7 @@
                     </div>
 
                 {% empty %}
-                    <div class="col-span-3 text-center py-20 bg-white rounded-xl border border-gray-100">
+                    <div class="col-span-2 md:col-span-3 text-center py-20 bg-white rounded-xl border border-gray-100">
                         <svg class="w-16 h-16 text-gray-200 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                         </svg>

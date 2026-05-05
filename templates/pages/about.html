@@ -16,7 +16,7 @@
     </nav>
 
     <!-- HERO -->
-    <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f3460] rounded-2xl p-12 mb-10 relative overflow-hidden">
+    <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f3460] rounded-2xl p-7 md:p-12 mb-8 relative overflow-hidden">
         <div class="absolute -right-10 -top-10 w-48 h-48 bg-white/5 rounded-full"></div>
         <div class="absolute right-20 -bottom-8 w-32 h-32 bg-[#e63946]/10 rounded-full"></div>
         <div class="relative max-w-2xl">
@@ -37,7 +37,7 @@
     </div>
 
     <!-- STATS -->
-    <div class="grid grid-cols-4 gap-5 mb-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-white rounded-2xl border border-gray-100 p-6 text-center">
             <p class="text-3xl font-black text-[#e63946] mb-1">1000+</p>
             <p class="text-sm text-gray-500">Довольных клиентов</p>
@@ -57,7 +57,7 @@
     </div>
 
     <!-- ABOUT + SERVICES -->
-    <div class="grid grid-cols-2 gap-8 mb-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
         <!-- TEXT -->
         <div class="bg-white rounded-2xl border border-gray-100 p-8">
@@ -129,12 +129,12 @@
     </div>
 
     <!-- CTA -->
-    <div class="bg-gradient-to-r from-[#1a1a2e] to-[#0f3460] rounded-2xl p-8 flex items-center justify-between">
+    <div class="bg-gradient-to-r from-[#1a1a2e] to-[#0f3460] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-5 justify-between">
         <div>
             <h3 class="text-xl font-black text-white mb-1">Готовы начать сотрудничество?</h3>
             <p class="text-gray-400 text-sm">Свяжитесь с нами и обсудим ваш проект</p>
         </div>
-        <div class="flex gap-3 shrink-0 ml-8">
+        <div class="flex flex-wrap gap-3 shrink-0">
             <a href="{% url 'pages:contacts' %}"
                class="inline-flex items-center gap-2 px-6 py-3 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors text-sm">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

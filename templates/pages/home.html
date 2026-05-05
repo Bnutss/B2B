@@ -9,7 +9,7 @@
 {% if banners %}
 <section class="bg-[#1a1a2e] py-10">
     <div class="max-w-7xl mx-auto px-4">
-        <div class="grid grid-cols-[1fr_1.6fr] gap-10 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-8 md:gap-10 items-center">
 
             <!-- LEFT: текст -->
             <div>
@@ -19,13 +19,13 @@
                     </svg>
                     Брендирование любой сложности
                 </div>
-                <h1 class="text-4xl font-black text-white leading-tight mb-5">
-                    Корпоративные<br>подарки с вашим<br><span class="text-[#e63946]">логотипом</span>
+                <h1 class="text-3xl md:text-4xl font-black text-white leading-tight mb-5">
+                    Корпоративные подарки с вашим <span class="text-[#e63946]">логотипом</span>
                 </h1>
                 <p class="text-gray-400 text-sm leading-relaxed mb-8">
                     Промо-продукция, брендированные сувениры и подарочные наборы для бизнеса. Доставка по всему Узбекистану.
                 </p>
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-row md:flex-col gap-3">
                     <a href="{% url 'catalog:list' %}"
                        class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors text-sm">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -67,7 +67,7 @@
             </div>
 
             <!-- RIGHT: слайдер -->
-            <div id="bannerSlider" class="relative rounded-2xl overflow-hidden shadow-2xl" style="height:440px;">
+            <div id="bannerSlider" class="relative rounded-2xl overflow-hidden shadow-2xl" style="height:320px;" data-md-height="440">
                 {% for banner in banners %}
                 <div class="banner-slide absolute inset-0 transition-all duration-700 ease-in-out"
                      style="{% if forloop.first %}opacity:1;z-index:2;{% else %}opacity:0;z-index:1;{% endif %}">
@@ -164,7 +164,7 @@
 <div class="max-w-7xl mx-auto px-4">
 
     <!-- ADVANTAGES -->
-    <div class="grid grid-cols-4 gap-5 py-10 border-b border-gray-100 mb-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 py-8 border-b border-gray-100 mb-10">
         <div class="flex items-start gap-4">
             <div class="w-11 h-11 bg-red-50 rounded-xl flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 text-[#e63946]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -223,7 +223,7 @@
             </svg>
         </a>
     </div>
-    <div class="grid grid-cols-5 gap-4 mb-14">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 mb-10 md:mb-14">
         {% for category in categories %}
             <a href="{% url 'catalog:category' category.slug %}"
                class="bg-white rounded-xl p-5 text-center border-2 border-transparent hover:border-[#e63946] hover:-translate-y-1 hover:shadow-md transition-all duration-200 group">
@@ -261,7 +261,7 @@
                 </svg>
             </a>
         </div>
-        <div class="grid grid-cols-4 gap-5 mb-14">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-10 md:mb-14">
             {% for product in featured %}
                 <div class="bg-white rounded-xl overflow-hidden border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 relative group">
                     {% if product.discount_percent %}
@@ -323,13 +323,13 @@
     <div class="relative bg-gradient-to-r from-[#1a1a2e] to-[#0f3460] rounded-2xl p-10 mb-14 overflow-hidden">
         <div class="absolute -right-8 -top-8 w-40 h-40 bg-white/5 rounded-full"></div>
         <div class="absolute -right-4 bottom-0 w-28 h-28 bg-[#e63946]/10 rounded-full"></div>
-        <div class="relative flex items-center justify-between">
+        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 justify-between">
             <div>
                 <h3 class="text-2xl font-black text-white mb-2">Нужен индивидуальный расчёт?</h3>
                 <p class="text-gray-400 text-sm max-w-md">Оставьте заявку и мы свяжемся с вами в течение 30 минут. Рассчитаем стоимость нанесения логотипа.</p>
             </div>
             <a href="https://t.me/ulugbeks07" target="_blank"
-               class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors shrink-0 ml-8">
+               class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors shrink-0 md:ml-8">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                 </svg>
@@ -342,18 +342,30 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if banners %}{% if banners|length > 1 %}
+{% if banners %}
 <script>
 (function() {
+    var slider = document.getElementById('bannerSlider');
     var slides = document.querySelectorAll('.banner-slide');
     var dots = document.querySelectorAll('.banner-dot');
     var total = slides.length, current = 0, timer;
+
+    /* адаптивная высота */
+    function setHeight() {
+        if (!slider) return;
+        slider.style.height = window.innerWidth >= 768 ? '440px' : '260px';
+    }
+    setHeight();
+    window.addEventListener('resize', setHeight);
+
+    if (total <= 1) return;
+
     function goTo(i) {
         slides[current].style.opacity='0'; slides[current].style.zIndex='1';
-        if(dots[current]){dots[current].classList.remove('w-7','bg-white');dots[current].classList.add('w-2','bg-white/40');}
+        if(dots[current]){dots[current].classList.remove('w-6','bg-[#e63946]');dots[current].classList.add('w-1.5','bg-white/30');}
         current=((i%total)+total)%total;
         slides[current].style.opacity='1'; slides[current].style.zIndex='2';
-        if(dots[current]){dots[current].classList.add('w-7','bg-white');dots[current].classList.remove('w-2','bg-white/40');}
+        if(dots[current]){dots[current].classList.add('w-6','bg-[#e63946]');dots[current].classList.remove('w-1.5','bg-white/30');}
     }
     function start(){timer=setInterval(function(){goTo(current+1);},5000);}
     window.nextBanner=function(){clearInterval(timer);goTo(current+1);start();};
@@ -362,5 +374,5 @@
     start();
 })();
 </script>
-{% endif %}{% endif %}
+{% endif %}
 {% endblock %}
