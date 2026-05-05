@@ -1,5 +1,26 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 from .models import Category, Product
+
+
+def search_autocomplete(request):
+    q = request.GET.get('q', '').strip()
+    results = []
+    if len(q) >= 2:
+        products = Product.objects.filter(
+            is_active=True, name__icontains=q
+        ).select_related('category').prefetch_related('images')[:8]
+        for p in products:
+            img = p.images.first()
+            results.append({
+                'name': p.name,
+                'slug': p.slug,
+                'price': str(int(p.price)) if p.price else None,
+                'category': p.category.name,
+                'image': img.image.url if img else None,
+                'url': p.get_absolute_url(),
+            })
+    return JsonResponse({'results': results})
 
 
 def catalog_list(request):
@@ -9,6 +30,10 @@ def catalog_list(request):
     category_slug = request.GET.get('category')
     if category_slug:
         products = products.filter(category__slug=category_slug)
+
+    q = request.GET.get('q', '').strip()
+    if q:
+        products = products.filter(name__icontains=q)
 
     context = {
         'categories': categories,
