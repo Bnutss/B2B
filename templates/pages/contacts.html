@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакты — B2BPrint{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8 pb-16">
+
+    <!-- BREADCRUMB -->
+    <nav class="flex items-center gap-2 text-sm text-gray-400 mb-6">
+        <a href="{% url 'pages:home' %}" class="hover:text-[#e63946] transition-colors">Главная</a>
+        <svg class="w-3.5 h-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+        <span class="text-gray-600 font-medium">Контакты</span>
+    </nav>
+
+    <h1 class="text-3xl font-black text-[#1a1a2e] mb-8">Контакты</h1>
+
+    <div class="grid grid-cols-2 gap-8 items-start">
+
+        <!-- CONTACT INFO -->
+        <div class="space-y-4">
+
+            <!-- Phones -->
+            <div class="bg-white rounded-2xl border border-gray-100 p-6">
+                <h3 class="text-sm font-bold text-[#1a1a2e] mb-5 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-[#e63946]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                    </svg>
+                    Телефоны
+                </h3>
+                <div class="space-y-3">
+                    <a href="tel:+998993041070"
+                       class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-colors group">
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 mb-0.5">Основной</p>
+                            <p class="text-sm font-bold text-[#1a1a2e] group-hover:text-[#e63946] transition-colors">+998 99 304-10-70</p>
+                        </div>
+                    </a>
+                    <a href="tel:+998932051070"
+                       class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-colors group">
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 mb-0.5">Дополнительный</p>
+                            <p class="text-sm font-bold text-[#1a1a2e] group-hover:text-[#e63946] transition-colors">+998 93 205-10-70</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Other contacts -->
+            <div class="grid grid-cols-2 gap-4">
+                <a href="https://t.me/abstrakt_manager" target="_blank"
+                   class="bg-white rounded-2xl border border-gray-100 p-5 hover:border-blue-200 hover:bg-blue-50/30 transition-all group">
+                    <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-3">
+                        <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-1">Мессенджер</p>
+                    <p class="text-sm font-bold text-[#1a1a2e] group-hover:text-blue-600 transition-colors">Telegram</p>
+                </a>
+
+                <div class="bg-white rounded-2xl border border-gray-100 p-5">
+                    <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
+                        <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-1">Режим работы</p>
+                    <p class="text-sm font-bold text-[#1a1a2e]">Пн–Пт</p>
+                    <p class="text-sm font-semibold text-gray-500">9:00 – 18:00</p>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="bg-white rounded-2xl border border-gray-100 p-5 flex items-start gap-4">
+                <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-[#e63946]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400 mb-1">Адрес</p>
+                    <p class="text-sm font-bold text-[#1a1a2e]">Ташкент, Узбекистан</p>
+                    <p class="text-xs text-gray-500 mt-1">Уточните адрес по телефону</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-8">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-[#e63946]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-[#1a1a2e]">Написать нам</h3>
+                    <p class="text-sm text-gray-400">Ответим в течение рабочего дня</p>
+                </div>
+            </div>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Ваше имя <span class="text-[#e63946]">*</span></label>
+                    <input type="text" name="name" required placeholder="Иван Иванов"
+                           class="w-full px-4 py-3 text-sm border-2 border-gray-200 rounded-xl outline-none focus:border-[#1a1a2e] transition-colors bg-slate-50 focus:bg-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Телефон <span class="text-[#e63946]">*</span></label>
+                    <input type="tel" name="phone" required placeholder="+998 90 000-00-00"
+                           class="w-full px-4 py-3 text-sm border-2 border-gray-200 rounded-xl outline-none focus:border-[#1a1a2e] transition-colors bg-slate-50 focus:bg-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Сообщение</label>
+                    <textarea name="message" rows="5" placeholder="Опишите ваш запрос..."
+                              class="w-full px-4 py-3 text-sm border-2 border-gray-200 rounded-xl outline-none focus:border-[#1a1a2e] transition-colors resize-none bg-slate-50 focus:bg-white"></textarea>
+                </div>
+                <button type="submit"
+                        class="w-full flex items-center justify-center gap-2.5 py-3.5 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors text-sm">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    </svg>
+                    Отправить сообщение
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
