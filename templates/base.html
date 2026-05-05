@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,55 +7,522 @@
     {% load static %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+          rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1a1a2e',
+                        primary: '#0f0f1a',
+                        'primary-light': '#1a1a2e',
                         accent: '#e63946',
                         'accent-hover': '#c1121f',
+                        'accent-soft': '#ffeaeb',
+                        surface: '#f8f8fc',
+                        'surface-2': '#f0f0f8',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['DM Sans', 'sans-serif'],
+                        display: ['Sora', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'header': '0 1px 0 0 rgba(0,0,0,0.06), 0 4px 24px -4px rgba(0,0,0,0.08)',
+                        'card': '0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04)',
+                        'card-hover': '0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)',
+                        'search': '0 20px 60px -10px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08)',
+                        'btn': '0 2px 8px rgba(230,57,70,0.35)',
                     }
                 }
             }
         }
     </script>
+    <style>
+        :root {
+            --primary: #0f0f1a;
+            --primary-light: #1a1a2e;
+            --accent: #e63946;
+            --accent-hover: #c1121f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── Topbar ── */
+        .topbar {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topbar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 80px,
+                    rgba(255, 255, 255, 0.015) 80px,
+                    rgba(255, 255, 255, 0.015) 81px
+            );
+            pointer-events: none;
+        }
+
+        .topbar-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.01em;
+        }
+
+        .topbar-link:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .topbar-link svg {
+            flex-shrink: 0;
+        }
+
+        /* ── Logo ── */
+        .logo-text {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            font-size: 1.375rem;
+            letter-spacing: -0.04em;
+            color: var(--primary);
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        /* ── Search ── */
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            border: 1.5px solid #e5e5ef;
+            border-radius: 14px;
+            outline: none;
+            background: #f8f8fc;
+            color: #0f0f1a;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(15, 15, 26, 0.06);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .search-input:focus ~ .search-icon,
+        .search-wrap:focus-within .search-icon {
+            color: var(--primary);
+        }
+
+        .search-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        /* ── Nav ── */
+        .main-nav {
+            background: var(--primary-light);
+            position: relative;
+        }
+
+        .main-nav::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 20px;
+            font-size: 13.5px;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-link.active {
+            color: #fff;
+            border-bottom-color: var(--accent);
+        }
+
+        /* ── Buttons ── */
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            border: 1.5px solid #d0d0e0;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--primary);
+            text-decoration: none;
+            background: transparent;
+            transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(15, 15, 26, 0.2);
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            background: var(--accent);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 16px rgba(230, 57, 70, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .cart-badge {
+            background: #fff;
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        /* ── Burger ── */
+        .burger-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1.5px solid #e5e5ef;
+            background: transparent;
+            color: #555;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+        }
+
+        .burger-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #f8f8fc;
+        }
+
+        /* ── Mobile Menu ── */
+        .mobile-menu {
+            background: var(--primary-light);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .mobile-nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* ── Messages ── */
+        .msg-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1.5px solid;
+        }
+
+        .msg-success {
+            background: #f0faf4;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+
+        .msg-error {
+            background: #fff5f5;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+        .msg-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border-color: #bfdbfe;
+        }
+
+        /* ── Footer ── */
+        .footer-bg {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse at 80% 0%, rgba(230, 57, 70, 0.07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .footer-logo {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.04em;
+            color: #fff;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-heading {
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .footer-link:hover {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            margin: 0;
+        }
+
+        /* ── Search item highlight ── */
+        mark {
+            background: #fff3cd;
+            color: #92400e;
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+
+        /* ── Smooth scroll ── */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ── Custom scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d0d0e0;
+            border-radius: 99px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        /* ── Transition on mobile menu ── */
+        #mobileMenu {
+            transition: none;
+        }
+
+        /* ── Focus visible ── */
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* ── Animate header on scroll ── */
+        .site-header {
+            transition: box-shadow 0.3s;
+        }
+
+        .site-header.scrolled {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 8px 32px -4px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ── Responsive helpers ── */
+        @media (max-width: 767px) {
+            .logo-text {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .btn-primary {
+                padding: 9px 12px;
+            }
+        }
+    </style>
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-slate-50 text-gray-900 font-sans antialiased">
+<body class="bg-surface text-gray-900 font-sans antialiased min-h-screen flex flex-col">
 
-<!-- HEADER -->
-<header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+<!-- ═══════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════ -->
+<header class="site-header bg-white sticky top-0 z-50 shrink-0" id="siteHeader">
 
-    <!-- TOP BAR — только десктоп -->
-    <div class="bg-[#1a1a2e] hidden md:block">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
-            <div class="flex items-center gap-1.5 text-gray-500 text-xs">
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    <!-- TOP BAR — desktop only -->
+    <div class="topbar hidden md:block">
+        <div class="max-w-7xl mx-auto px-5 py-2 flex items-center justify-between">
+
+            <!-- Left: working hours -->
+            <div class="topbar-link" style="cursor:default; pointer-events:none;">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path stroke-linecap="round" d="M12 7v5l3 3"/>
                 </svg>
                 <span>Пн–Пт: 9:00–18:00</span>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="tel:+998946705400" class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+
+            <!-- Right: contacts -->
+            <div class="flex items-center gap-5">
+                <a href="tel:+998946705400" class="topbar-link">
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                     </svg>
                     +998 94 670 54 00
                 </a>
-                <a href="mailto:info@b2bprint.uz" class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                <a href="mailto:info@b2bprint.uz" class="topbar-link">
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                     info@b2bprint.uz
                 </a>
-                <a href="https://t.me/ulugbeks07" target="_blank" class="flex items-center gap-1.5 text-gray-400 hover:text-white transition-colors text-xs">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                <a href="https://t.me/ulugbeks07" target="_blank" rel="noopener" class="topbar-link">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
                     Telegram
@@ -64,106 +531,107 @@
         </div>
     </div>
 
-    <!-- MAIN HEADER -->
-    <div class="max-w-7xl mx-auto px-4 py-3">
-        <div class="flex items-center gap-3">
+    <!-- MAIN HEADER ROW -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-3">
+        <div class="flex items-center gap-3 sm:gap-4">
 
-            <!-- LOGO -->
-            <a href="{% url 'pages:home' %}" class="text-xl font-black text-[#1a1a2e] tracking-tight shrink-0">
-                B2B<span class="text-[#e63946]">Print</span>
+            <!-- Logo -->
+            <a href="{% url 'pages:home' %}" class="logo-text shrink-0">
+                B2B<span>Print</span>
             </a>
 
-            <!-- SEARCH — только на md+ в строке -->
-            <div class="hidden md:flex flex-1 max-w-2xl relative" id="searchWrapper">
-                <div class="relative flex items-center w-full">
-                    <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                    <input id="searchInput" type="text"
-                        placeholder="Поиск товаров..."
-                        class="w-full pl-10 pr-4 py-2.5 text-sm border-2 border-gray-200 rounded-xl outline-none focus:border-[#1a1a2e] transition-colors bg-gray-50 focus:bg-white"
-                        autocomplete="off" spellcheck="false">
-                </div>
-                <div id="searchDropdown" class="hidden absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-2xl mt-1.5 z-50 overflow-hidden"></div>
+            <!-- Search — desktop -->
+            <div class="hidden md:block flex-1 max-w-xl search-wrap" id="searchWrapper">
+                <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                     stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input id="searchInput" type="text" placeholder="Поиск товаров..." class="search-input"
+                       autocomplete="off" spellcheck="false">
+                <div id="searchDropdown" class="search-dropdown hidden"></div>
             </div>
 
-            <!-- ACTIONS -->
+            <!-- Actions -->
             <div class="flex items-center gap-2 ml-auto shrink-0">
-                <a href="tel:+998946705400"
-                   class="hidden lg:flex items-center gap-2 px-4 py-2.5 border-2 border-[#1a1a2e] text-[#1a1a2e] rounded-xl text-sm font-semibold hover:bg-[#1a1a2e] hover:text-white transition-all">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+
+                <!-- Call button — lg+ -->
+                <a href="tel:+998946705400" class="btn-outline hidden lg:inline-flex">
+                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                     </svg>
                     Позвонить
                 </a>
-                <a href="{% url 'orders:cart' %}"
-                   class="flex items-center gap-2 px-3 md:px-4 py-2.5 bg-[#e63946] text-white rounded-xl text-sm font-semibold hover:bg-[#c1121f] transition-colors">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+
+                <!-- Cart -->
+                <a href="{% url 'orders:cart' %}" class="btn-primary">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                     <span class="hidden sm:inline">Корзина</span>
-                    <span class="bg-white text-[#e63946] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center leading-none">
-                        {{ request.session.cart|length|default:0 }}
-                    </span>
+                    <span class="cart-badge">{{ request.session.cart|length|default:0 }}</span>
                 </a>
-                <!-- Бургер — только мобильные -->
-                <button id="burgerBtn"
-                        class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl border-2 border-gray-200 text-gray-600 hover:border-gray-300 transition-colors">
-                    <svg id="burgerIcon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+
+                <!-- Burger — mobile -->
+                <button id="burgerBtn" class="burger-btn md:hidden" aria-label="Меню" aria-expanded="false">
+                    <svg id="burgerIcon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
-                    <svg id="closeIcon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg id="closeIcon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         stroke-width="2" class="hidden">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
         </div>
 
-        <!-- MOBILE SEARCH — всегда видна на мобильных -->
-        <div class="md:hidden mt-3 relative" id="searchWrapperMobile">
-            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <!-- Search — mobile -->
+        <div class="md:hidden mt-3 search-wrap" id="searchWrapperMobile">
+            <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                 stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-            <input id="searchInputMobile" type="text"
-                placeholder="Поиск товаров..."
-                class="w-full pl-10 pr-4 py-2.5 text-sm border-2 border-gray-200 rounded-xl outline-none focus:border-[#1a1a2e] transition-colors bg-gray-50 focus:bg-white"
-                autocomplete="off" spellcheck="false">
-            <div id="searchDropdownMobile" class="hidden absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-2xl mt-1.5 z-50 overflow-hidden"></div>
+            <input id="searchInputMobile" type="text" placeholder="Поиск товаров..." class="search-input"
+                   autocomplete="off" spellcheck="false">
+            <div id="searchDropdownMobile" class="search-dropdown hidden"></div>
         </div>
     </div>
 
     <!-- DESKTOP NAV -->
-    <nav class="bg-[#1a1a2e] hidden md:block">
-        <div class="max-w-7xl mx-auto px-4 flex items-center overflow-x-auto">
+    <nav class="main-nav hidden md:block">
+        <div class="max-w-7xl mx-auto px-5 flex items-center overflow-x-auto scrollbar-hide">
             <a href="{% url 'pages:home' %}"
-               class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2 whitespace-nowrap
-               {% if request.resolver_match.url_name == 'home' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+               class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
                 Главная
             </a>
             <a href="{% url 'catalog:list' %}"
-               class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2 whitespace-nowrap
-               {% if request.resolver_match.namespace == 'catalog' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+               class="nav-link {% if request.resolver_match.namespace == 'catalog' %}active{% endif %}">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                 </svg>
                 Каталог
             </a>
             <a href="{% url 'pages:about' %}"
-               class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2 whitespace-nowrap
-               {% if request.resolver_match.url_name == 'about' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+               class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 О нас
             </a>
             <a href="{% url 'pages:contacts' %}"
-               class="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-all border-b-2 whitespace-nowrap
-               {% if request.resolver_match.url_name == 'contacts' %}text-white border-[#e63946]{% else %}text-gray-400 border-transparent hover:text-white hover:border-white/30{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+               class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% endif %}">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
                 Контакты
             </a>
@@ -171,170 +639,215 @@
     </nav>
 
     <!-- MOBILE MENU -->
-    <div id="mobileMenu" class="hidden md:hidden bg-[#1a1a2e]">
+    <div id="mobileMenu" class="mobile-menu hidden md:hidden">
         <div class="px-4 py-3 space-y-1">
             <a href="{% url 'pages:home' %}"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors
-               {% if request.resolver_match.url_name == 'home' %}bg-white/10 text-white{% else %}text-gray-400 hover:text-white hover:bg-white/10{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+               class="mobile-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
                 Главная
             </a>
             <a href="{% url 'catalog:list' %}"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors
-               {% if request.resolver_match.namespace == 'catalog' %}bg-white/10 text-white{% else %}text-gray-400 hover:text-white hover:bg-white/10{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+               class="mobile-nav-link {% if request.resolver_match.namespace == 'catalog' %}active{% endif %}">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                 </svg>
                 Каталог
             </a>
             <a href="{% url 'pages:about' %}"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors
-               {% if request.resolver_match.url_name == 'about' %}bg-white/10 text-white{% else %}text-gray-400 hover:text-white hover:bg-white/10{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+               class="mobile-nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 О нас
             </a>
             <a href="{% url 'pages:contacts' %}"
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors
-               {% if request.resolver_match.url_name == 'contacts' %}bg-white/10 text-white{% else %}text-gray-400 hover:text-white hover:bg-white/10{% endif %}">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+               class="mobile-nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% endif %}">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
                 Контакты
             </a>
         </div>
-        <div class="px-4 pb-4 pt-1 border-t border-white/10 flex gap-3">
+
+        <!-- Mobile CTA -->
+        <div class="px-4 pb-4 pt-2 border-t border-white/10 grid grid-cols-2 gap-2.5">
             <a href="tel:+998946705400"
-               class="flex-1 flex items-center justify-center gap-2 py-2.5 bg-white/10 text-white text-sm font-semibold rounded-xl hover:bg-white/20 transition-colors">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+               class="flex items-center justify-center gap-2 py-3 rounded-14 text-sm font-semibold text-white bg-white/10 hover:bg-white/18 transition-colors"
+               style="border-radius:12px;">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                 </svg>
                 Позвонить
             </a>
-            <a href="https://t.me/ulugbeks07" target="_blank"
-               class="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#e63946] text-white text-sm font-semibold rounded-xl hover:bg-[#c1121f] transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <a href="https://t.me/ulugbeks07" target="_blank" rel="noopener"
+               class="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white transition-colors"
+               style="border-radius:12px; background: var(--accent);">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                 </svg>
                 Telegram
             </a>
         </div>
     </div>
+
 </header>
 
-<!-- MESSAGES -->
+<!-- ═══════════════════════════════════════════
+     FLASH MESSAGES
+═══════════════════════════════════════════ -->
 {% if messages %}
-    <div class="max-w-7xl mx-auto px-4 pt-4 space-y-2">
+    <div class="max-w-7xl mx-auto w-full px-4 sm:px-5 pt-4 space-y-2 shrink-0">
         {% for message in messages %}
-            <div class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium border
-            {% if message.tags == 'success' %}bg-green-50 text-green-800 border-green-200
-            {% elif message.tags == 'error' %}bg-red-50 text-red-800 border-red-200
-            {% else %}bg-blue-50 text-blue-800 border-blue-200{% endif %}">
-                {{ message }}
+            <div class="msg-wrap
+                {% if message.tags == 'success' %}msg-success
+                {% elif message.tags == 'error' %}msg-error
+                {% else %}msg-info{% endif %}">
+                {% if message.tags == 'success' %}
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         class="shrink-0">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                {% elif message.tags == 'error' %}
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         class="shrink-0">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                {% else %}
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         class="shrink-0">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                {% endif %}
+                <span>{{ message }}</span>
             </div>
         {% endfor %}
     </div>
 {% endif %}
 
-<!-- CONTENT -->
-{% block content %}{% endblock %}
+<!-- ═══════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════ -->
+<main class="flex-1">
+    {% block content %}{% endblock %}
+</main>
 
-<!-- FOOTER -->
-<footer class="bg-[#1a1a2e] text-gray-400 mt-16">
-    <div class="max-w-7xl mx-auto px-4 pt-10 pb-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer-bg shrink-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 pt-12 pb-8 relative z-10">
 
-            <!-- BRAND -->
+        <!-- Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 mb-10">
+
+            <!-- Brand -->
             <div class="col-span-2 md:col-span-1">
-                <div class="text-xl font-black text-white mb-4 tracking-tight">
-                    B2B<span class="text-[#e63946]">Print</span>
-                </div>
-                <p class="text-sm leading-relaxed mb-5 text-gray-500">
+                <div class="footer-logo mb-4">B2B<span>Print</span></div>
+                <p class="text-sm leading-relaxed mb-6 text-white/35" style="font-family:'DM Sans',sans-serif;">
                     Корпоративные подарки и промо-продукция с нанесением логотипа в Ташкенте.
                 </p>
-                <div class="space-y-2.5">
-                    <a href="tel:+998946705400" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                <div class="space-y-3">
+                    <a href="tel:+998946705400" class="footer-link">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:rgba(255,255,255,0.25); flex-shrink:0;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                         </svg>
                         +998 94 670 54 00
                     </a>
-                    <a href="mailto:info@b2bprint.uz" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    <a href="mailto:info@b2bprint.uz" class="footer-link">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:rgba(255,255,255,0.25); flex-shrink:0;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         info@b2bprint.uz
                     </a>
-                    <a href="mailto:sales@b2bprint.uz" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-4 h-4 text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    <a href="mailto:sales@b2bprint.uz" class="footer-link">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:rgba(255,255,255,0.25); flex-shrink:0;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         sales@b2bprint.uz
                     </a>
                 </div>
             </div>
 
-            <!-- CATALOG -->
+            <!-- Catalog -->
             <div>
-                <h4 class="text-white font-semibold text-sm mb-4">Каталог</h4>
+                <div class="footer-heading">Каталог</div>
                 {% for cat in categories %}
-                    <a href="{% url 'catalog:category' cat.slug %}"
-                       class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">
-                        {{ cat.name }}
-                    </a>
+                    <a href="{% url 'catalog:category' cat.slug %}" class="footer-link">{{ cat.name }}</a>
                 {% endfor %}
             </div>
 
-            <!-- COMPANY -->
+            <!-- Company -->
             <div>
-                <h4 class="text-white font-semibold text-sm mb-4">Компания</h4>
-                <a href="{% url 'pages:about' %}" class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">О нас</a>
-                <a href="{% url 'pages:contacts' %}" class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">Контакты</a>
-                <a href="{% url 'catalog:list' %}" class="block text-sm text-gray-500 hover:text-gray-200 mb-2.5 transition-colors">Весь каталог</a>
+                <div class="footer-heading">Компания</div>
+                <a href="{% url 'pages:about' %}" class="footer-link">О нас</a>
+                <a href="{% url 'pages:contacts' %}" class="footer-link">Контакты</a>
+                <a href="{% url 'catalog:list' %}" class="footer-link">Весь каталог</a>
             </div>
 
-            <!-- CONTACTS -->
+            <!-- Contact -->
             <div>
-                <h4 class="text-white font-semibold text-sm mb-4">Связаться</h4>
-                <a href="https://t.me/ulugbeks07" target="_blank"
-                   class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 mb-3 transition-colors">
-                    <svg class="w-4 h-4 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <div class="footer-heading">Связаться</div>
+                <a href="https://t.me/ulugbeks07" target="_blank" rel="noopener" class="footer-link">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"
+                         style="color:#5eaee0; flex-shrink:0;">
                         <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
                     Telegram
                 </a>
-                <a href="tel:+998946705400"
-                   class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 mb-3 transition-colors">
-                    <svg class="w-4 h-4 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+                <a href="tel:+998946705400" class="footer-link">
+                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         style="color:#4ade80; flex-shrink:0;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
                     </svg>
                     +998 94 670 54 00
                 </a>
-                <a href="mailto:info@b2bprint.uz"
-                   class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 mb-3 transition-colors">
-                    <svg class="w-4 h-4 text-[#e63946] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                <a href="mailto:info@b2bprint.uz" class="footer-link">
+                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         style="color:var(--accent); flex-shrink:0;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                     info@b2bprint.uz
                 </a>
-                <a href="{% url 'pages:contacts' %}"
-                   class="flex items-center gap-2.5 text-sm text-gray-500 hover:text-gray-200 transition-colors">
-                    <svg class="w-4 h-4 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                <a href="{% url 'pages:contacts' %}" class="footer-link">
+                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                         style="color:rgba(255,255,255,0.25); flex-shrink:0;">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                     </svg>
                     Написать нам
                 </a>
             </div>
         </div>
 
-        <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span class="text-xs text-gray-600">© 2025 B2BPrint — Все права защищены</span>
-            <div class="flex items-center gap-1.5 text-xs text-gray-700">
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+        <!-- Bottom bar -->
+        <hr class="footer-divider mb-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span class="text-xs" style="color:rgba(255,255,255,0.2); font-family:'DM Sans',sans-serif;">
+                © 2025 B2BPrint — Все права защищены
+            </span>
+            <div class="flex items-center gap-1.5 text-xs"
+                 style="color:rgba(255,255,255,0.2); font-family:'DM Sans',sans-serif;">
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
                 Ташкент, Узбекистан
@@ -345,120 +858,167 @@
 
 {% block extra_js %}{% endblock %}
 
-<!-- GLOBAL SCRIPTS -->
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════ -->
 <script>
-/* ── Burger menu ── */
-(function() {
-    var btn = document.getElementById('burgerBtn');
-    var menu = document.getElementById('mobileMenu');
-    var bIcon = document.getElementById('burgerIcon');
-    var cIcon = document.getElementById('closeIcon');
-    if (!btn) return;
-    btn.addEventListener('click', function() {
-        var open = menu.classList.toggle('hidden');
-        bIcon.classList.toggle('hidden', !open);
-        cIcon.classList.toggle('hidden', open);
-    });
-})();
+    /* ── Burger menu ── */
+    (function () {
+        var btn = document.getElementById('burgerBtn');
+        var menu = document.getElementById('mobileMenu');
+        var bIco = document.getElementById('burgerIcon');
+        var cIco = document.getElementById('closeIcon');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            var isOpen = !menu.classList.contains('hidden');
+            menu.classList.toggle('hidden');
+            bIco.classList.toggle('hidden', isOpen);
+            cIco.classList.toggle('hidden', !isOpen);
+            btn.setAttribute('aria-expanded', String(!isOpen));
+        });
+        // Close on outside click
+        document.addEventListener('click', function (e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+                bIco.classList.remove('hidden');
+                cIco.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    })();
 
-/* ── Telegram order ── */
-window.orderViaTelegram = function(name, path) {
-    var productUrl = window.location.origin + path;
-    var text = 'Здравствуйте! Хочу заказать:\n\nТовар: ' + name + '\nСсылка: ' + productUrl;
-    window.open('https://t.me/ulugbeks07?text=' + encodeURIComponent(text), '_blank');
-};
+    /* ── Header shadow on scroll ── */
+    (function () {
+        var header = document.getElementById('siteHeader');
+        if (!header) return;
+        var onScroll = function () {
+            header.classList.toggle('scrolled', window.scrollY > 4);
+        };
+        window.addEventListener('scroll', onScroll, {passive: true});
+        onScroll();
+    })();
 
-/* ── Search autocomplete factory ── */
-function initSearch(inputId, dropdownId) {
-    var input = document.getElementById(inputId);
-    var dropdown = document.getElementById(dropdownId);
-    if (!input || !dropdown) return;
+    /* ── Telegram order ── */
+    window.orderViaTelegram = function (name, path) {
+        var productUrl = window.location.origin + path;
+        var text = 'Здравствуйте! Хочу заказать:\n\nТовар: ' + name + '\nСсылка: ' + productUrl;
+        window.open('https://t.me/ulugbeks07?text=' + encodeURIComponent(text), '_blank');
+    };
 
-    var results = [], focused = -1, timer;
+    /* ── Search autocomplete factory ── */
+    function initSearch(inputId, dropdownId) {
+        var input = document.getElementById(inputId);
+        var dropdown = document.getElementById(dropdownId);
+        if (!input || !dropdown) return;
 
-    var noImg = '<div class="w-12 h-12 bg-slate-100 rounded-xl shrink-0 flex items-center justify-center">'
-              + '<svg class="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">'
-              + '<path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>'
-              + '</svg></div>';
+        var results = [], focused = -1, timer;
 
-    function fmtPrice(n) { return Math.floor(parseFloat(n)).toLocaleString('ru-RU'); }
-    function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-    function highlight(text, q) {
-        var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
-        return esc(text).replace(re, '<mark class="bg-yellow-100 text-yellow-800 rounded px-0.5">$1</mark>');
-    }
+        var noImg = '<div class="w-12 h-12 bg-surface-2 rounded-xl shrink-0 flex items-center justify-center" style="background:#f0f0f8;">'
+            + '<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:#ccc;">'
+            + '<path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>'
+            + '</svg></div>';
 
-    function render(data, q) {
-        results = data; focused = -1;
-        if (!data.length) {
-            dropdown.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-400">Ничего не найдено по запросу <strong class="text-gray-600">"' + esc(q) + '"</strong></div>';
-            dropdown.classList.remove('hidden'); return;
+        function fmtPrice(n) {
+            return Math.floor(parseFloat(n)).toLocaleString('ru-RU');
         }
-        var html = '<div class="py-1">';
-        data.forEach(function(p, i) {
-            html += '<a href="' + p.url + '" data-idx="' + i + '" class="search-item flex items-center gap-3 px-4 py-3 hover:bg-slate-50 transition-colors border-b border-gray-100 last:border-0" style="text-decoration:none;">';
-            html += p.image ? '<img src="' + p.image + '" class="w-12 h-12 object-cover rounded-xl shrink-0">' : noImg;
-            html += '<div class="flex-1 min-w-0">';
-            html += '<p class="text-sm font-semibold text-gray-900 truncate">' + highlight(p.name, q) + '</p>';
-            html += '<p class="text-xs text-gray-400 mt-0.5">' + esc(p.category) + '</p>';
+
+        function esc(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function highlight(text, q) {
+            var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            return esc(text).replace(re, '<mark>$1</mark>');
+        }
+
+        function render(data, q) {
+            results = data;
+            focused = -1;
+            if (!data.length) {
+                dropdown.innerHTML = '<div style="padding:24px 16px; text-align:center; font-size:13px; color:#aaa; font-family:\'DM Sans\',sans-serif;">Ничего не найдено по запросу <strong style="color:#666;">"' + esc(q) + '"</strong></div>';
+                dropdown.classList.remove('hidden');
+                return;
+            }
+            var html = '<div style="padding:6px 0;">';
+            data.forEach(function (p, i) {
+                html += '<a href="' + p.url + '" data-idx="' + i + '" class="search-item" style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #f3f3fa;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background=\'#f8f8fc\'" onmouseout="this.style.background=\'transparent\'">';
+                html += p.image ? '<img src="' + p.image + '" style="width:46px;height:46px;object-fit:cover;border-radius:10px;flex-shrink:0;">' : noImg;
+                html += '<div style="flex:1;min-width:0;">';
+                html += '<p style="font-size:13.5px;font-weight:600;color:#0f0f1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:\'DM Sans\',sans-serif;">' + highlight(p.name, q) + '</p>';
+                html += '<p style="font-size:11.5px;color:#aaa;margin-top:2px;font-family:\'DM Sans\',sans-serif;">' + esc(p.category) + '</p>';
+                html += '</div>';
+                if (p.price) html += '<span style="font-size:13.5px;font-weight:700;color:var(--accent);flex-shrink:0;margin-left:8px;font-family:\'Sora\',sans-serif;">' + fmtPrice(p.price) + ' UZS</span>';
+                html += '</a>';
+            });
+            html += '<a href="/catalog/?q=' + encodeURIComponent(q) + '" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 14px;font-size:12.5px;font-weight:600;color:var(--accent);border-top:1px solid #f3f3fa;text-decoration:none;transition:background 0.15s;font-family:\'DM Sans\',sans-serif;" onmouseover="this.style.background=\'#fff5f5\'" onmouseout="this.style.background=\'transparent\'">'
+                + '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>'
+                + 'Смотреть все результаты для «' + esc(q) + '»</a>';
             html += '</div>';
-            if (p.price) html += '<span class="text-sm font-bold text-[#e63946] shrink-0 ml-2">' + fmtPrice(p.price) + ' UZS</span>';
-            html += '</a>';
-        });
-        html += '<a href="/catalog/?q=' + encodeURIComponent(q) + '" class="flex items-center justify-center gap-2 px-4 py-3 text-xs font-semibold text-[#e63946] hover:bg-red-50 transition-colors border-t border-gray-100" style="text-decoration:none;">'
-             + '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>'
-             + 'Смотреть все результаты для «' + esc(q) + '»</a>';
-        html += '</div>';
-        dropdown.innerHTML = html;
-        dropdown.classList.remove('hidden');
-    }
-
-    function setFocus(idx) {
-        var items = dropdown.querySelectorAll('.search-item');
-        items.forEach(function(el, i) {
-            el.classList.toggle('bg-slate-50', i === idx);
-            if (i === idx) el.scrollIntoView({block:'nearest'});
-        });
-        focused = idx;
-    }
-
-    function hide() { dropdown.classList.add('hidden'); focused = -1; }
-
-    input.addEventListener('input', function() {
-        clearTimeout(timer);
-        var q = this.value.trim();
-        if (q.length < 2) { hide(); return; }
-        timer = setTimeout(function() {
-            fetch('/catalog/search/?q=' + encodeURIComponent(q))
-                .then(function(r) { return r.json(); })
-                .then(function(d) { render(d.results, q); })
-                .catch(function() { hide(); });
-        }, 250);
-    });
-
-    input.addEventListener('keydown', function(e) {
-        var items = dropdown.querySelectorAll('.search-item');
-        if (e.key === 'Escape') { hide(); }
-        else if (e.key === 'ArrowDown') { e.preventDefault(); setFocus(Math.min(focused + 1, items.length - 1)); }
-        else if (e.key === 'ArrowUp') { e.preventDefault(); setFocus(Math.max(focused - 1, 0)); }
-        else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (focused >= 0 && items[focused]) items[focused].click();
-            else if (results.length) window.location.href = items[0].href;
+            dropdown.innerHTML = html;
+            dropdown.classList.remove('hidden');
         }
-    });
 
-    document.addEventListener('click', function(e) {
-        if (!input.closest('[id]').contains(e.target) && !dropdown.contains(e.target)) hide();
-    });
+        function setFocus(idx) {
+            var items = dropdown.querySelectorAll('.search-item');
+            items.forEach(function (el, i) {
+                el.style.background = i === idx ? '#f8f8fc' : 'transparent';
+                if (i === idx) el.scrollIntoView({block: 'nearest'});
+            });
+            focused = idx;
+        }
 
-    input.addEventListener('focus', function() {
-        if (this.value.trim().length >= 2 && results.length) dropdown.classList.remove('hidden');
-    });
-}
+        function hide() {
+            dropdown.classList.add('hidden');
+            focused = -1;
+        }
 
-initSearch('searchInput', 'searchDropdown');
-initSearch('searchInputMobile', 'searchDropdownMobile');
+        input.addEventListener('input', function () {
+            clearTimeout(timer);
+            var q = this.value.trim();
+            if (q.length < 2) {
+                hide();
+                return;
+            }
+            timer = setTimeout(function () {
+                fetch('/catalog/search/?q=' + encodeURIComponent(q))
+                    .then(function (r) {
+                        return r.json();
+                    })
+                    .then(function (d) {
+                        render(d.results, q);
+                    })
+                    .catch(hide);
+            }, 250);
+        });
+
+        input.addEventListener('keydown', function (e) {
+            var items = dropdown.querySelectorAll('.search-item');
+            if (e.key === 'Escape') hide();
+            else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setFocus(Math.min(focused + 1, items.length - 1));
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setFocus(Math.max(focused - 1, 0));
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (focused >= 0 && items[focused]) items[focused].click();
+                else if (results.length) window.location.href = items[0].href;
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!input.closest('[id]').contains(e.target) && !dropdown.contains(e.target)) hide();
+        });
+
+        input.addEventListener('focus', function () {
+            if (this.value.trim().length >= 2 && results.length) dropdown.classList.remove('hidden');
+        });
+    }
+
+    initSearch('searchInput', 'searchDropdown');
+    initSearch('searchInputMobile', 'searchDropdownMobile');
 </script>
+
 </body>
 </html>

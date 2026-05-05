@@ -3,376 +3,1029 @@
 
 {% block title %}B2BPrint — Корпоративные подарки и промо-продукция{% endblock %}
 
+{% block extra_css %}
+    <style>
+        /* ── Hero ── */
+        .hero-section {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+        }
+
+        /* ── Badge pill ── */
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(230, 57, 70, 0.12);
+            border: 1px solid rgba(230, 57, 70, 0.25);
+            border-radius: 99px;
+            color: #ff6b74;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+
+        /* ── Hero title ── */
+        .hero-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: #fff;
+        }
+
+        .hero-title em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        /* ── Hero buttons ── */
+        .hero-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .hero-btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 28px rgba(230, 57, 70, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .hero-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+
+        /* ── Slider ── */
+        .slider-wrap {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .banner-slide {
+            position: absolute;
+            inset: 0;
+            transition: opacity 0.7s ease;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            inset-x: 0;
+            bottom: 0;
+            padding: 28px 24px 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+        }
+
+        /* ── Slider nav dots ── */
+        .dot-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .nav-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+            background: transparent;
+            flex-shrink: 0;
+        }
+
+        .nav-arrow:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .banner-dot {
+            height: 4px;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: width 0.35s ease, background 0.35s ease;
+            background: rgba(255, 255, 255, 0.25);
+            width: 6px;
+            border: none;
+            padding: 0;
+        }
+
+        .banner-dot.active {
+            width: 24px;
+            background: var(--accent);
+        }
+
+        /* ── Advantages ── */
+        .adv-section {
+            background: #fff;
+            border-bottom: 1px solid #ebebf5;
+        }
+
+        .adv-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px 0;
+        }
+
+        .adv-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .adv-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 13.5px;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .adv-desc {
+            font-size: 12.5px;
+            color: #888;
+            line-height: 1.5;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* ── Section titles ── */
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            font-size: 1.625rem;
+            color: var(--primary);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+
+        .section-title em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .see-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'DM Sans', sans-serif;
+            transition: color 0.2s, gap 0.2s;
+        }
+
+        .see-all:hover {
+            color: var(--accent-hover);
+            gap: 8px;
+        }
+
+        /* ── Category cards ── */
+        .cat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px 12px;
+            background: #fff;
+            border-radius: 16px;
+            border: 1.5px solid #ebebf5;
+            text-decoration: none;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .cat-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 28px rgba(230, 57, 70, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .cat-img-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            background: #f4f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s;
+        }
+
+        .cat-card:hover .cat-img-wrap {
+            transform: scale(1.07);
+        }
+
+        .cat-name {
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--primary);
+            line-height: 1.4;
+        }
+
+        /* ── Product cards ── */
+        .prod-card {
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1.5px solid #ebebf5;
+            transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+            position: relative;
+        }
+
+        .prod-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            border-color: #d8d8ee;
+        }
+
+        .prod-img-wrap {
+            height: 200px;
+            background: #f8f8fc;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .prod-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.35s ease;
+        }
+
+        .prod-card:hover .prod-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            font-family: 'Sora', sans-serif;
+            padding: 4px 10px;
+            border-radius: 8px;
+            z-index: 5;
+            letter-spacing: 0.02em;
+        }
+
+        .prod-body {
+            padding: 14px 16px 16px;
+        }
+
+        .prod-name {
+            font-size: 13.5px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--primary);
+            line-height: 1.4;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .prod-name:hover {
+            color: var(--accent);
+        }
+
+        .prod-price {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            color: var(--accent);
+        }
+
+        .prod-price-old {
+            font-size: 12px;
+            color: #bbb;
+            text-decoration: line-through;
+            font-family: 'DM Sans', sans-serif;
+            margin-left: 5px;
+        }
+
+        .prod-price-req {
+            font-size: 13px;
+            color: #aaa;
+            font-style: italic;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-order {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 12px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 12.5px;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-order:hover {
+            background: #0f3460;
+            box-shadow: 0 4px 14px rgba(15, 15, 26, 0.25);
+        }
+
+        .btn-view {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f4f4f8;
+            color: #888;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-view:hover {
+            background: #ebebf5;
+            color: var(--primary);
+        }
+
+        /* ── CTA banner ── */
+        .cta-banner {
+            background: var(--primary-light);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.15) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .cta-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 30%;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-family: 'Sora', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .cta-desc {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, 0.45);
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            max-width: 420px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 28px rgba(230, 57, 70, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* ── Static hero SVG illustration ── */
+        .hero-illustration {
+            opacity: 0.85;
+        }
+
+        /* ── Entrance animations ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim-1 {
+            animation: fadeUp 0.55s ease both;
+        }
+
+        .anim-2 {
+            animation: fadeUp 0.55s 0.1s ease both;
+        }
+
+        .anim-3 {
+            animation: fadeUp 0.55s 0.2s ease both;
+        }
+
+        .anim-4 {
+            animation: fadeUp 0.55s 0.3s ease both;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 767px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .prod-img-wrap {
+                height: 160px;
+            }
+
+            .cta-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 
-<!-- BANNER / HERO -->
-{% if banners %}
-<section class="bg-[#1a1a2e] py-10">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-8 md:gap-10 items-center">
+    <!-- ═══════════════════════════════════════
+         HERO / BANNER
+    ═══════════════════════════════════════ -->
+    {% if banners %}
+        <section class="hero-section">
+            <div class="hero-grid"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-5 py-10 sm:py-14 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_1.55fr] gap-8 md:gap-12 items-center">
 
-            <!-- LEFT: текст -->
-            <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/20 rounded-full text-[#e63946] text-xs font-semibold mb-6 border border-[#e63946]/30">
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-                    </svg>
-                    Брендирование любой сложности
-                </div>
-                <h1 class="text-3xl md:text-4xl font-black text-white leading-tight mb-5">
-                    Корпоративные подарки с вашим <span class="text-[#e63946]">логотипом</span>
-                </h1>
-                <p class="text-gray-400 text-sm leading-relaxed mb-8">
-                    Промо-продукция, брендированные сувениры и подарочные наборы для бизнеса. Доставка по всему Узбекистану.
-                </p>
-                <div class="flex flex-row md:flex-col gap-3">
-                    <a href="{% url 'catalog:list' %}"
-                       class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors text-sm">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-                        </svg>
-                        Смотреть каталог
-                    </a>
-                    <a href="https://t.me/ulugbeks07" target="_blank"
-                       class="inline-flex items-center gap-2.5 px-6 py-3 border-2 border-white/20 text-white font-bold rounded-xl hover:bg-white/10 transition-all text-sm">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        Написать в Telegram
-                    </a>
-                </div>
-
-                {% if banners|length > 1 %}
-                <div class="flex items-center gap-3 mt-8">
-                    <button onclick="prevBanner()" class="w-8 h-8 border border-white/20 hover:border-white/50 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-all">
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
-                    <div class="flex gap-2">
-                        {% for b in banners %}
-                        <button onclick="goToBanner({{ forloop.counter0 }})"
-                                class="banner-dot h-1.5 rounded-full transition-all duration-300 {% if forloop.first %}w-6 bg-[#e63946]{% else %}w-1.5 bg-white/30{% endif %}"
-                                data-index="{{ forloop.counter0 }}">
-                        </button>
-                        {% endfor %}
-                    </div>
-                    <button onclick="nextBanner()" class="w-8 h-8 border border-white/20 hover:border-white/50 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-all">
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </button>
-                </div>
-                {% endif %}
-            </div>
-
-            <!-- RIGHT: слайдер -->
-            <div id="bannerSlider" class="relative rounded-2xl overflow-hidden shadow-2xl" style="height:320px;" data-md-height="440">
-                {% for banner in banners %}
-                <div class="banner-slide absolute inset-0 transition-all duration-700 ease-in-out"
-                     style="{% if forloop.first %}opacity:1;z-index:2;{% else %}opacity:0;z-index:1;{% endif %}">
-                    {% if banner.link %}
-                    <a href="{{ banner.link }}" class="block w-full h-full">
-                    {% endif %}
-                        <img src="{{ banner.image.url }}" alt="{{ banner.title }}"
-                             class="w-full h-full object-cover object-center">
-                        {% if banner.title %}
-                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-6 py-5">
-                            <p class="text-white font-bold text-lg leading-snug">{{ banner.title }}</p>
+                    <!-- Text -->
+                    <div>
+                        <div class="badge-pill anim-1">
+                            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                 stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                            </svg>
+                            Брендирование любой сложности
                         </div>
-                        {% endif %}
-                    {% if banner.link %}
-                    </a>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-
-        </div>
-    </div>
-</section>
-
-{% else %}
-<!-- STATIC HERO -->
-<section class="bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white">
-    <div class="max-w-7xl mx-auto px-4 py-20">
-        <div class="grid grid-cols-2 gap-16 items-center">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/20 rounded-full text-[#e63946] text-xs font-semibold mb-6 border border-[#e63946]/30">
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-                    </svg>
-                    Брендирование любой сложности
-                </div>
-                <h1 class="text-5xl font-black leading-tight mb-6">
-                    Корпоративные<br>подарки с вашим<br>
-                    <span class="text-[#e63946]">логотипом</span>
-                </h1>
-                <p class="text-gray-400 text-lg leading-relaxed mb-8 max-w-md">
-                    Промо-продукция, брендированные сувениры и подарочные наборы для бизнеса. Доставка по всему Узбекистану.
-                </p>
-                <div class="flex gap-4">
-                    <a href="{% url 'catalog:list' %}"
-                       class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-                        </svg>
-                        Смотреть каталог
-                    </a>
-                    <a href="https://t.me/ulugbeks07" target="_blank"
-                       class="inline-flex items-center gap-2.5 px-7 py-3.5 border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-all">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        Написать в Telegram
-                    </a>
-                </div>
-            </div>
-            <div class="flex items-center justify-center">
-                <svg viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-lg">
-                    <circle cx="220" cy="150" r="125" stroke="rgba(230,57,70,0.08)" stroke-width="1.5" stroke-dasharray="6 4"/>
-                    <circle cx="220" cy="150" r="95" stroke="rgba(230,57,70,0.12)" stroke-width="1"/>
-                    <circle cx="220" cy="150" r="65" fill="rgba(230,57,70,0.07)" stroke="rgba(230,57,70,0.2)" stroke-width="1.5"/>
-                    <rect x="185" y="115" width="70" height="70" rx="14" fill="rgba(230,57,70,0.18)" stroke="#e63946" stroke-width="1.5"/>
-                    <rect x="196" y="126" width="48" height="48" rx="8" fill="rgba(230,57,70,0.12)" stroke="rgba(230,57,70,0.35)" stroke-width="1"/>
-                    <text x="220" y="156" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="16" fill="rgba(230,57,70,0.8)">B2B</text>
-                    <rect x="40" y="107" width="95" height="65" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
-                    <rect x="52" y="117" width="32" height="32" rx="6" fill="rgba(255,255,255,0.06)"/>
-                    <rect x="92" y="119" width="32" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
-                    <rect x="92" y="131" width="24" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
-                    <rect x="92" y="141" width="28" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
-                    <rect x="52" y="154" width="70" height="8" rx="4" fill="rgba(230,57,70,0.28)"/>
-                    <rect x="305" y="107" width="95" height="65" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
-                    <rect x="317" y="117" width="32" height="32" rx="6" fill="rgba(255,255,255,0.06)"/>
-                    <rect x="357" y="119" width="32" height="7" rx="3.5" fill="rgba(255,255,255,0.14)"/>
-                    <rect x="357" y="131" width="24" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
-                    <rect x="357" y="141" width="28" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
-                    <rect x="317" y="154" width="70" height="8" rx="4" fill="rgba(230,57,70,0.28)"/>
-                    <line x1="135" y1="139" x2="185" y2="150" stroke="rgba(230,57,70,0.22)" stroke-width="1.5" stroke-dasharray="5 3"/>
-                    <line x1="255" y1="150" x2="305" y2="139" stroke="rgba(230,57,70,0.22)" stroke-width="1.5" stroke-dasharray="5 3"/>
-                    <circle cx="360" cy="55" r="3.5" fill="#e63946" opacity="0.4"/>
-                    <circle cx="80" cy="210" r="3" fill="#e63946" opacity="0.3"/>
-                    <circle cx="400" cy="210" r="4" fill="rgba(255,255,255,0.12)"/>
-                    <circle cx="38" cy="75" r="2.5" fill="rgba(255,255,255,0.18)"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-</section>
-{% endif %}
-
-<div class="max-w-7xl mx-auto px-4">
-
-    <!-- ADVANTAGES -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 py-8 border-b border-gray-100 mb-10">
-        <div class="flex items-start gap-4">
-            <div class="w-11 h-11 bg-red-50 rounded-xl flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-[#e63946]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-                </svg>
-            </div>
-            <div>
-                <h4 class="font-bold text-[#1a1a2e] text-sm mb-1">Нанесение логотипа</h4>
-                <p class="text-gray-500 text-xs leading-relaxed">Печать, гравировка, вышивка на любых товарах</p>
-            </div>
-        </div>
-        <div class="flex items-start gap-4">
-            <div class="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-            </div>
-            <div>
-                <h4 class="font-bold text-[#1a1a2e] text-sm mb-1">Быстрое производство</h4>
-                <p class="text-gray-500 text-xs leading-relaxed">Срочные заказы от 1 рабочего дня</p>
-            </div>
-        </div>
-        <div class="flex items-start gap-4">
-            <div class="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                </svg>
-            </div>
-            <div>
-                <h4 class="font-bold text-[#1a1a2e] text-sm mb-1">Оптовые цены</h4>
-                <p class="text-gray-500 text-xs leading-relaxed">Скидки при заказе от 50 штук</p>
-            </div>
-        </div>
-        <div class="flex items-start gap-4">
-            <div class="w-11 h-11 bg-purple-50 rounded-xl flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
-                </svg>
-            </div>
-            <div>
-                <h4 class="font-bold text-[#1a1a2e] text-sm mb-1">Доставка по Узбекистану</h4>
-                <p class="text-gray-500 text-xs leading-relaxed">Отправляем во все регионы страны</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- CATEGORIES -->
-    <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-black text-[#1a1a2e]">Категории <span class="text-[#e63946]">товаров</span></h2>
-        <a href="{% url 'catalog:list' %}"
-           class="inline-flex items-center gap-1.5 text-sm font-semibold text-[#e63946] hover:text-[#c1121f] transition-colors">
-            Все категории
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
-        </a>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 mb-10 md:mb-14">
-        {% for category in categories %}
-            <a href="{% url 'catalog:category' category.slug %}"
-               class="bg-white rounded-xl p-5 text-center border-2 border-transparent hover:border-[#e63946] hover:-translate-y-1 hover:shadow-md transition-all duration-200 group">
-                {% if category.image %}
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}"
-                         class="w-14 h-14 object-cover rounded-xl mx-auto mb-3 group-hover:scale-105 transition-transform">
-                {% else %}
-                    <div class="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-                        <svg class="w-6 h-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                        </svg>
-                    </div>
-                {% endif %}
-                <span class="text-xs font-semibold text-[#1a1a2e] leading-tight block">{{ category.name }}</span>
-            </a>
-        {% empty %}
-            <div class="col-span-5 text-center py-12 bg-white rounded-xl border border-gray-100">
-                <svg class="w-12 h-12 text-gray-200 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/>
-                </svg>
-                <p class="text-gray-400 text-sm">Категории пока не добавлены</p>
-            </div>
-        {% endfor %}
-    </div>
-
-    <!-- FEATURED PRODUCTS -->
-    {% if featured %}
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-black text-[#1a1a2e]">Актуальные <span class="text-[#e63946]">товары</span></h2>
-            <a href="{% url 'catalog:list' %}"
-               class="inline-flex items-center gap-1.5 text-sm font-semibold text-[#e63946] hover:text-[#c1121f] transition-colors">
-                Все товары
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
-        </div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-10 md:mb-14">
-            {% for product in featured %}
-                <div class="bg-white rounded-xl overflow-hidden border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 relative group">
-                    {% if product.discount_percent %}
-                        <span class="absolute top-3 left-3 bg-[#e63946] text-white text-xs font-bold px-2.5 py-1 rounded-lg z-10">
-                            -{{ product.discount_percent }}%
-                        </span>
-                    {% endif %}
-                    <a href="{% url 'catalog:product' product.slug %}">
-                        <div class="h-48 bg-slate-50 flex items-center justify-center overflow-hidden">
-                            {% with product.images.first as img %}
-                                {% if img %}
-                                    <img src="{{ img.image.url }}" alt="{{ product.name }}"
-                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                                {% else %}
-                                    <svg class="w-14 h-14 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                    </svg>
-                                {% endif %}
-                            {% endwith %}
-                        </div>
-                    </a>
-                    <div class="p-4">
-                        <h3 class="text-sm font-semibold text-[#1a1a2e] leading-snug mb-3 line-clamp-2">
-                            <a href="{% url 'catalog:product' product.slug %}" class="hover:text-[#e63946] transition-colors">{{ product.name }}</a>
-                        </h3>
-                        <div class="flex items-center gap-2 mb-3">
-                            {% if product.price %}
-                                <span class="text-base font-black text-[#e63946]">{{ product.price|fmt_price }} UZS</span>
-                                {% if product.price_old %}
-                                    <span class="text-xs text-gray-400 line-through">{{ product.price_old|fmt_price }}</span>
-                                {% endif %}
-                            {% else %}
-                                <span class="text-sm text-gray-400 italic">Цена по запросу</span>
-                            {% endif %}
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="orderViaTelegram('{{ product.name|escapejs }}', '{% url 'catalog:product' product.slug %}')"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-[#1a1a2e] text-white text-xs font-semibold rounded-xl hover:bg-[#0f3460] transition-colors cursor-pointer">
-                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <h1 class="hero-title anim-2" style="font-size:clamp(1.6rem, 4vw, 2.5rem); margin-bottom:16px;">
+                            Корпоративные подарки<br>с вашим <em>логотипом</em>
+                        </h1>
+                        <p class="anim-3"
+                           style="color:rgba(255,255,255,0.45); font-size:14px; line-height:1.7; margin-bottom:28px; font-family:'DM Sans',sans-serif; max-width:400px;">
+                            Промо-продукция, брендированные сувениры и подарочные наборы для бизнеса. Доставка по всему
+                            Узбекистану.
+                        </p>
+                        <div class="anim-4 flex flex-wrap gap-3">
+                            <a href="{% url 'catalog:list' %}" class="hero-btn-primary">
+                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                Смотреть каталог
+                            </a>
+                            <a href="https://t.me/ulugbeks07" target="_blank" rel="noopener" class="hero-btn-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                                 </svg>
-                                Заказать
-                            </button>
-                            <a href="{% url 'catalog:product' product.slug %}"
-                               class="flex items-center justify-center w-10 h-10 bg-slate-100 text-gray-500 rounded-xl hover:bg-slate-200 transition-colors">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                Написать в Telegram
+                            </a>
+                        </div>
+
+                        {% if banners|length > 1 %}
+                            <div class="dot-nav anim-4" style="animation-delay:0.4s;">
+                                <button onclick="prevBanner()" class="nav-arrow" aria-label="Назад">
+                                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                         stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                                    </svg>
+                                </button>
+                                <div style="display:flex;gap:5px;align-items:center;">
+                                    {% for b in banners %}
+                                        <button onclick="goToBanner({{ forloop.counter0 }})"
+                                                class="banner-dot {% if forloop.first %}active{% endif %}"
+                                                data-index="{{ forloop.counter0 }}"
+                                                aria-label="Слайд {{ forloop.counter }}">
+                                        </button>
+                                    {% endfor %}
+                                </div>
+                                <button onclick="nextBanner()" class="nav-arrow" aria-label="Вперёд">
+                                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                         stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Slider -->
+                    <div class="slider-wrap anim-3" id="bannerSlider" style="height:300px;" data-md-height="440">
+                        {% for banner in banners %}
+                            <div class="banner-slide"
+                                 style="{% if forloop.first %}opacity:1;z-index:2;{% else %}opacity:0;z-index:1;{% endif %}">
+                                {% if banner.link %}<a href="{{ banner.link }}" class="block w-full h-full">{% endif %}
+                                <img src="{{ banner.image.url }}" alt="{{ banner.title }}"
+                                     style="width:100%;height:100%;object-fit:cover;object-position:center;">
+                                {% if banner.title %}
+                                    <div class="slide-overlay">
+                                        <p style="color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:17px;line-height:1.3;">{{ banner.title }}</p>
+                                    </div>
+                                {% endif %}
+                                {% if banner.link %}</a>{% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    {% else %}
+
+        <!-- ── Static hero (no banners) ── -->
+        <section class="hero-section">
+            <div class="hero-grid"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-5 py-16 sm:py-24 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <div>
+                        <div class="badge-pill anim-1">
+                            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                 stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                            </svg>
+                            Брендирование любой сложности
+                        </div>
+                        <h1 class="hero-title anim-2" style="font-size:clamp(2rem, 5vw, 3.25rem); margin-bottom:20px;">
+                            Корпоративные<br>подарки с вашим<br><em>логотипом</em>
+                        </h1>
+                        <p class="anim-3"
+                           style="color:rgba(255,255,255,0.45); font-size:15px; line-height:1.7; margin-bottom:32px; font-family:'DM Sans',sans-serif; max-width:440px;">
+                            Промо-продукция, брендированные сувениры и подарочные наборы для бизнеса. Доставка по всему
+                            Узбекистану.
+                        </p>
+                        <div class="anim-4 flex flex-wrap gap-3">
+                            <a href="{% url 'catalog:list' %}" class="hero-btn-primary">
+                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                     stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                                 </svg>
+                                Смотреть каталог
+                            </a>
+                            <a href="https://t.me/ulugbeks07" target="_blank" rel="noopener" class="hero-btn-secondary">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                </svg>
+                                Написать в Telegram
                             </a>
                         </div>
                     </div>
+
+                    <!-- SVG illustration -->
+                    <div class="hidden md:flex items-center justify-center hero-illustration anim-3">
+                        <svg viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             style="width:100%;max-width:460px;">
+                            <circle cx="220" cy="150" r="128" stroke="rgba(230,57,70,0.07)" stroke-width="1"
+                                    stroke-dasharray="6 5"/>
+                            <circle cx="220" cy="150" r="95" stroke="rgba(230,57,70,0.11)" stroke-width="1"/>
+                            <circle cx="220" cy="150" r="66" fill="rgba(230,57,70,0.06)" stroke="rgba(230,57,70,0.18)"
+                                    stroke-width="1.5"/>
+                            <rect x="186" y="116" width="68" height="68" rx="14" fill="rgba(230,57,70,0.15)"
+                                  stroke="rgba(230,57,70,0.35)" stroke-width="1.5"/>
+                            <rect x="197" y="127" width="46" height="46" rx="8" fill="rgba(230,57,70,0.1)"
+                                  stroke="rgba(230,57,70,0.28)" stroke-width="1"/>
+                            <text x="220" y="156" text-anchor="middle" font-family="'Sora',sans-serif" font-weight="900"
+                                  font-size="15" fill="rgba(230,57,70,0.75)">B2B
+                            </text>
+                            <!-- left card -->
+                            <rect x="38" y="108" width="94" height="64" rx="11" fill="rgba(255,255,255,0.04)"
+                                  stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                            <rect x="50" y="118" width="30" height="30" rx="6" fill="rgba(255,255,255,0.06)"/>
+                            <rect x="88" y="120" width="32" height="6" rx="3" fill="rgba(255,255,255,0.13)"/>
+                            <rect x="88" y="131" width="24" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
+                            <rect x="88" y="141" width="28" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
+                            <rect x="50" y="153" width="68" height="8" rx="4" fill="rgba(230,57,70,0.25)"/>
+                            <!-- right card -->
+                            <rect x="308" y="108" width="94" height="64" rx="11" fill="rgba(255,255,255,0.04)"
+                                  stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                            <rect x="320" y="118" width="30" height="30" rx="6" fill="rgba(255,255,255,0.06)"/>
+                            <rect x="358" y="120" width="32" height="6" rx="3" fill="rgba(255,255,255,0.13)"/>
+                            <rect x="358" y="131" width="24" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
+                            <rect x="358" y="141" width="28" height="5" rx="2.5" fill="rgba(255,255,255,0.07)"/>
+                            <rect x="320" y="153" width="68" height="8" rx="4" fill="rgba(230,57,70,0.25)"/>
+                            <!-- connectors -->
+                            <line x1="132" y1="140" x2="185" y2="150" stroke="rgba(230,57,70,0.2)" stroke-width="1.5"
+                                  stroke-dasharray="5 4"/>
+                            <line x1="255" y1="150" x2="308" y2="140" stroke="rgba(230,57,70,0.2)" stroke-width="1.5"
+                                  stroke-dasharray="5 4"/>
+                            <!-- dots -->
+                            <circle cx="362" cy="55" r="3" fill="rgba(230,57,70,0.35)"/>
+                            <circle cx="80" cy="212" r="2.5" fill="rgba(230,57,70,0.25)"/>
+                            <circle cx="400" cy="210" r="3.5" fill="rgba(255,255,255,0.1)"/>
+                            <circle cx="36" cy="76" r="2" fill="rgba(255,255,255,0.15)"/>
+                        </svg>
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        </section>
     {% endif %}
 
-    <!-- CTA BANNER -->
-    <div class="relative bg-gradient-to-r from-[#1a1a2e] to-[#0f3460] rounded-2xl p-10 mb-14 overflow-hidden">
-        <div class="absolute -right-8 -top-8 w-40 h-40 bg-white/5 rounded-full"></div>
-        <div class="absolute -right-4 bottom-0 w-28 h-28 bg-[#e63946]/10 rounded-full"></div>
-        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 justify-between">
-            <div>
-                <h3 class="text-2xl font-black text-white mb-2">Нужен индивидуальный расчёт?</h3>
-                <p class="text-gray-400 text-sm max-w-md">Оставьте заявку и мы свяжемся с вами в течение 30 минут. Рассчитаем стоимость нанесения логотипа.</p>
+    <!-- ═══════════════════════════════════════
+         ADVANTAGES BAR
+    ═══════════════════════════════════════ -->
+    <div class="adv-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-5">
+            <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-100">
+                <div class="adv-item px-0 md:px-6 first:pl-0">
+                    <div class="adv-icon" style="background:#fff0f1;">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:#e63946;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="adv-title">Нанесение логотипа</div>
+                        <div class="adv-desc">Печать, гравировка, вышивка на любых товарах</div>
+                    </div>
+                </div>
+                <div class="adv-item px-4 md:px-6">
+                    <div class="adv-icon" style="background:#eff6ff;">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:#3b82f6;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="adv-title">Быстрое производство</div>
+                        <div class="adv-desc">Срочные заказы от 1 рабочего дня</div>
+                    </div>
+                </div>
+                <div class="adv-item px-0 md:px-6 pt-4 md:pt-0">
+                    <div class="adv-icon" style="background:#f0faf4;">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:#22c55e;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="adv-title">Оптовые цены</div>
+                        <div class="adv-desc">Скидки при заказе от 50 штук</div>
+                    </div>
+                </div>
+                <div class="adv-item px-4 md:px-6 pt-4 md:pt-0">
+                    <div class="adv-icon" style="background:#faf5ff;">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2" style="color:#a855f7;">
+                            <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="adv-title">Доставка по Узбекистану</div>
+                        <div class="adv-desc">Отправляем во все регионы страны</div>
+                    </div>
+                </div>
             </div>
-            <a href="https://t.me/ulugbeks07" target="_blank"
-               class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors shrink-0 md:ml-8">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                </svg>
-                Написать в Telegram
-            </a>
         </div>
     </div>
 
-</div>
+    <!-- ═══════════════════════════════════════
+         CONTENT SECTIONS
+    ═══════════════════════════════════════ -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-5 py-10 sm:py-14 space-y-14">
+
+        <!-- CATEGORIES -->
+        <section>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                <h2 class="section-title">Категории <em>товаров</em></h2>
+                <a href="{% url 'catalog:list' %}" class="see-all">
+                    Все категории
+                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                         stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+                {% for category in categories %}
+                    <a href="{% url 'catalog:category' category.slug %}" class="cat-card">
+                        <div class="cat-img-wrap">
+                            {% if category.image %}
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}"
+                                     style="width:100%;height:100%;object-fit:cover;">
+                            {% else %}
+                                <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                     stroke-width="1.5" style="color:#ccc;">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                </svg>
+                            {% endif %}
+                        </div>
+                        <span class="cat-name">{{ category.name }}</span>
+                    </a>
+                {% empty %}
+                    <div style="grid-column:1/-1;text-align:center;padding:48px 24px;background:#fff;border-radius:16px;border:1.5px solid #ebebf5;">
+                        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="1.5" style="color:#d0d0e0;margin:0 auto 12px;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/>
+                        </svg>
+                        <p style="font-size:13.5px;color:#aaa;font-family:'DM Sans',sans-serif;">Категории пока не
+                            добавлены</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- FEATURED PRODUCTS -->
+        {% if featured %}
+            <section>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                    <h2 class="section-title">Актуальные <em>товары</em></h2>
+                    <a href="{% url 'catalog:list' %}" class="see-all">
+                        Все товары
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+                    {% for product in featured %}
+                        <div class="prod-card">
+                            {% if product.discount_percent %}
+                                <span class="discount-badge">−{{ product.discount_percent }}%</span>
+                            {% endif %}
+
+                            <a href="{% url 'catalog:product' product.slug %}">
+                                <div class="prod-img-wrap">
+                                    {% with product.images.first as img %}
+                                        {% if img %}
+                                            <img src="{{ img.image.url }}" alt="{{ product.name }}">
+                                        {% else %}
+                                            <svg width="48" height="48" fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor" stroke-width="1.5" style="color:#ddd;">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                            </svg>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+                            </a>
+
+                            <div class="prod-body">
+                                <a href="{% url 'catalog:product' product.slug %}"
+                                   class="prod-name">{{ product.name }}</a>
+
+                                <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:12px;">
+                                    {% if product.price %}
+                                        <span class="prod-price">{{ product.price|fmt_price }} UZS</span>
+                                        {% if product.price_old %}
+                                            <span class="prod-price-old">{{ product.price_old|fmt_price }}</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="prod-price-req">Цена по запросу</span>
+                                    {% endif %}
+                                </div>
+
+                                <div style="display:flex;gap:8px;align-items:center;">
+                                    <button onclick="orderViaTelegram('{{ product.name|escapejs }}', '{% url 'catalog:product' product.slug %}')"
+                                            class="btn-order">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.277-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                        </svg>
+                                        Заказать
+                                    </button>
+                                    <a href="{% url 'catalog:product' product.slug %}" class="btn-view"
+                                       title="Подробнее">
+                                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24"
+                                             stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        <!-- CTA BANNER -->
+        <section>
+            <div class="cta-banner">
+                <div style="position:relative;z-index:10;padding:36px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;">
+                    <div>
+                        <div class="cta-title">Нужен индивидуальный расчёт?</div>
+                        <div class="cta-desc">Оставьте заявку и мы свяжемся с вами в течение 30 минут. Рассчитаем
+                            стоимость нанесения логотипа.
+                        </div>
+                    </div>
+                    <a href="https://t.me/ulugbeks07" target="_blank" rel="noopener" class="cta-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        Написать в Telegram
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
 {% endblock %}
 
 {% block extra_js %}
-{% if banners %}
-<script>
-(function() {
-    var slider = document.getElementById('bannerSlider');
-    var slides = document.querySelectorAll('.banner-slide');
-    var dots = document.querySelectorAll('.banner-dot');
-    var total = slides.length, current = 0, timer;
+    {% if banners %}
+        <script>
+            (function () {
+                var slider = document.getElementById('bannerSlider');
+                var slides = document.querySelectorAll('.banner-slide');
+                var dots = document.querySelectorAll('.banner-dot');
+                var total = slides.length, current = 0, timer;
 
-    /* адаптивная высота */
-    function setHeight() {
-        if (!slider) return;
-        slider.style.height = window.innerWidth >= 768 ? '440px' : '260px';
-    }
-    setHeight();
-    window.addEventListener('resize', setHeight);
+                function setHeight() {
+                    if (!slider) return;
+                    slider.style.height = window.innerWidth >= 768 ? '440px' : '260px';
+                }
 
-    if (total <= 1) return;
+                setHeight();
+                window.addEventListener('resize', setHeight, {passive: true});
 
-    function goTo(i) {
-        slides[current].style.opacity='0'; slides[current].style.zIndex='1';
-        if(dots[current]){dots[current].classList.remove('w-6','bg-[#e63946]');dots[current].classList.add('w-1.5','bg-white/30');}
-        current=((i%total)+total)%total;
-        slides[current].style.opacity='1'; slides[current].style.zIndex='2';
-        if(dots[current]){dots[current].classList.add('w-6','bg-[#e63946]');dots[current].classList.remove('w-1.5','bg-white/30');}
-    }
-    function start(){timer=setInterval(function(){goTo(current+1);},5000);}
-    window.nextBanner=function(){clearInterval(timer);goTo(current+1);start();};
-    window.prevBanner=function(){clearInterval(timer);goTo(current-1);start();};
-    window.goToBanner=function(i){clearInterval(timer);goTo(i);start();};
-    start();
-})();
-</script>
-{% endif %}
+                if (total <= 1) return;
+
+                function goTo(i) {
+                    slides[current].style.opacity = '0';
+                    slides[current].style.zIndex = '1';
+                    if (dots[current]) dots[current].classList.remove('active');
+
+                    current = ((i % total) + total) % total;
+
+                    slides[current].style.opacity = '1';
+                    slides[current].style.zIndex = '2';
+                    if (dots[current]) dots[current].classList.add('active');
+                }
+
+                function start() {
+                    timer = setInterval(function () {
+                        goTo(current + 1);
+                    }, 5000);
+                }
+
+                window.nextBanner = function () {
+                    clearInterval(timer);
+                    goTo(current + 1);
+                    start();
+                };
+                window.prevBanner = function () {
+                    clearInterval(timer);
+                    goTo(current - 1);
+                    start();
+                };
+                window.goToBanner = function (i) {
+                    clearInterval(timer);
+                    goTo(i);
+                    start();
+                };
+
+                start();
+            }());
+        </script>
+    {% endif %}
 {% endblock %}
