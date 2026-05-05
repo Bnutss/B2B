@@ -7,48 +7,88 @@
 
 <!-- BANNER / HERO -->
 {% if banners %}
-<section class="relative overflow-hidden bg-[#1a1a2e]">
-    <div id="bannerSlider" class="relative" style="height:480px;">
-        {% for banner in banners %}
-        <div class="banner-slide absolute inset-0 transition-all duration-700 ease-in-out"
-             style="{% if forloop.first %}opacity:1;z-index:2;{% else %}opacity:0;z-index:1;{% endif %}">
-            {% if banner.link %}
-            <a href="{{ banner.link }}" class="block w-full h-full">
-            {% endif %}
-                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="w-full h-full object-cover">
-                {% if banner.title %}
-                <div class="absolute inset-0 bg-gradient-to-r from-[#1a1a2e]/80 via-[#1a1a2e]/40 to-transparent flex items-center">
-                    <div class="max-w-7xl mx-auto px-4 w-full">
-                        <h2 class="text-4xl font-black text-white max-w-2xl leading-tight">{{ banner.title }}</h2>
+<section class="bg-[#1a1a2e] py-10">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-[1fr_1.6fr] gap-10 items-center">
+
+            <!-- LEFT: текст -->
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e63946]/20 rounded-full text-[#e63946] text-xs font-semibold mb-6 border border-[#e63946]/30">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                    Брендирование любой сложности
+                </div>
+                <h1 class="text-4xl font-black text-white leading-tight mb-5">
+                    Корпоративные<br>подарки с вашим<br><span class="text-[#e63946]">логотипом</span>
+                </h1>
+                <p class="text-gray-400 text-sm leading-relaxed mb-8">
+                    Промо-продукция, брендированные сувениры и подарочные наборы для бизнеса. Доставка по всему Узбекистану.
+                </p>
+                <div class="flex flex-col gap-3">
+                    <a href="{% url 'catalog:list' %}"
+                       class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#e63946] text-white font-bold rounded-xl hover:bg-[#c1121f] transition-colors text-sm">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                        Смотреть каталог
+                    </a>
+                    <a href="https://t.me/ulugbeks07" target="_blank"
+                       class="inline-flex items-center gap-2.5 px-6 py-3 border-2 border-white/20 text-white font-bold rounded-xl hover:bg-white/10 transition-all text-sm">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        Написать в Telegram
+                    </a>
+                </div>
+
+                {% if banners|length > 1 %}
+                <div class="flex items-center gap-3 mt-8">
+                    <button onclick="prevBanner()" class="w-8 h-8 border border-white/20 hover:border-white/50 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <div class="flex gap-2">
+                        {% for b in banners %}
+                        <button onclick="goToBanner({{ forloop.counter0 }})"
+                                class="banner-dot h-1.5 rounded-full transition-all duration-300 {% if forloop.first %}w-6 bg-[#e63946]{% else %}w-1.5 bg-white/30{% endif %}"
+                                data-index="{{ forloop.counter0 }}">
+                        </button>
+                        {% endfor %}
                     </div>
+                    <button onclick="nextBanner()" class="w-8 h-8 border border-white/20 hover:border-white/50 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
                 </div>
                 {% endif %}
-            {% if banner.link %}
-            </a>
-            {% endif %}
-        </div>
-        {% endfor %}
+            </div>
 
-        {% if banners|length > 1 %}
-        <button onclick="prevBanner()" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/10 hover:bg-white/25 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all z-20 border border-white/20">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-            </svg>
-        </button>
-        <button onclick="nextBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/10 hover:bg-white/25 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all z-20 border border-white/20">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
-        </button>
-        <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {% for banner in banners %}
-            <button onclick="goToBanner({{ forloop.counter0 }})"
-                    class="banner-dot h-2 rounded-full transition-all duration-300 {% if forloop.first %}w-7 bg-white{% else %}w-2 bg-white/40{% endif %}"
-                    data-index="{{ forloop.counter0 }}">
-            </button>
-            {% endfor %}
+            <!-- RIGHT: слайдер -->
+            <div id="bannerSlider" class="relative rounded-2xl overflow-hidden shadow-2xl" style="height:440px;">
+                {% for banner in banners %}
+                <div class="banner-slide absolute inset-0 transition-all duration-700 ease-in-out"
+                     style="{% if forloop.first %}opacity:1;z-index:2;{% else %}opacity:0;z-index:1;{% endif %}">
+                    {% if banner.link %}
+                    <a href="{{ banner.link }}" class="block w-full h-full">
+                    {% endif %}
+                        <img src="{{ banner.image.url }}" alt="{{ banner.title }}"
+                             class="w-full h-full object-cover object-center">
+                        {% if banner.title %}
+                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-6 py-5">
+                            <p class="text-white font-bold text-lg leading-snug">{{ banner.title }}</p>
+                        </div>
+                        {% endif %}
+                    {% if banner.link %}
+                    </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
-        {% endif %}
     </div>
 </section>
 
